@@ -1,0 +1,15 @@
+version: '1.0'
+
+services:
+  postgres:
+    image: postgres:13.14
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - elixir-event-manager:/var/lib/postgresql/data
+
+volumes:
+  elixir-event-manager:
