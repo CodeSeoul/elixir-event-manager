@@ -3,8 +3,8 @@ defmodule EventManager.Schema do
     quote do
       use Ecto.Schema
 
-      @primary_key {:id, Ecto.UUID, autogenerate: {Ecto.UUID, :generate, []}}
-      @foreign_key_type Ecto.UUID
+      @primary_key {:id, UUIDv7, autogenerate: true}
+      @foreign_key_type UUIDv7
 
       @timestamps_opts [type: :utc_datetime]
     end
