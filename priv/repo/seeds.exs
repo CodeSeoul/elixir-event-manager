@@ -13,6 +13,7 @@
 alias EventManager.Repo
 
 alias EventManager.Events.Schemas.Event
+alias EventManager.Events.Schemas.Rsvp
 alias EventManager.Events.Schemas.Series
 alias EventManager.Members.Schemas.Member
 alias EventManager.Venues.Schemas.MapLink
@@ -35,12 +36,13 @@ Repo.insert(%MapLink{
 
 # Insert members
 
-Repo.insert!(%Member{
-  username: "snachez",
-  display_name: "Carlos Sanchez",
-  email: "carlos+event_manager@codeseoul.org",
-  phone: "+82 10-6899-2809"
-})
+%{id: member_id} =
+  Repo.insert!(%Member{
+    username: "snachez",
+    display_name: "Carlos Sanchez",
+    email: "carlos+event_manager@codeseoul.org",
+    phone: "+82 10-6899-2809"
+  })
 
 # Insert events
 
@@ -50,20 +52,34 @@ Repo.insert!(%Member{
   })
 
 events = [
-  %Event{
+  %{
+    id: UUIDv7.generate(),
     description: "Social gathering with other coders",
     starts_at: ~U[2024-05-12 09:00:00Z],
     duration: 120,
     venue_id: venue_id,
-    series_id: series_id
+    series_id: series_id,
+    inserted_at: DateTime.utc_now(:second),
+    updated_at: DateTime.utc_now(:second)
   },
-  %Event{
+  %{
+    id: UUIDv7.generate(),
     description: "Social gathering with other coders",
     starts_at: ~U[2024-05-26 09:00:00Z],
     duration: 120,
     venue_id: venue_id,
-    series_id: series_id
+    series_id: series_id,
+    inserted_at: DateTime.utc_now(:second),
+    updated_at: DateTime.utc_now(:second)
   }
 ]
 
-Enum.each(events, &Repo.insert!/1)
+{2, [_, event]} = Repo.insert_all(Event, events, returning: true)
+
+# Insert RSVPs
+
+Repo.insert!(%Rsvp{
+  status: :yes,
+  event_id: event.id,
+  member_id: member_id
+})

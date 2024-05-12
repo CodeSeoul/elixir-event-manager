@@ -3,6 +3,8 @@ defmodule EventManager.Members.Schemas.Member do
 
   import Ecto.Changeset
 
+  alias EventManager.Events.Schemas.Rsvp
+
   @email_regex ~r<
     (?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*
     |"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\
@@ -21,6 +23,8 @@ defmodule EventManager.Members.Schemas.Member do
     field(:phone, :string)
     field(:image_url, :string)
     field(:short_bio, :string)
+
+    has_many(:rsvps, Rsvp)
 
     timestamps()
   end

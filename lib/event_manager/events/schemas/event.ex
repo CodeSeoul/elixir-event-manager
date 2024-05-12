@@ -2,6 +2,7 @@ defmodule EventManager.Events.Schemas.Event do
   use EventManager.Schema
   import Ecto.Changeset
 
+  alias EventManager.Events.Schemas.Rsvp
   alias EventManager.Events.Schemas.Series
   alias EventManager.Venues.Schemas.Venue
 
@@ -14,6 +15,8 @@ defmodule EventManager.Events.Schemas.Event do
 
     belongs_to(:venue, Venue)
     belongs_to(:series, Series)
+
+    has_many(:rsvps, Rsvp)
 
     timestamps()
   end
