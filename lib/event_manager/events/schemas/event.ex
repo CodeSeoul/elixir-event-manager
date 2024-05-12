@@ -2,6 +2,7 @@ defmodule EventManager.Events.Schemas.Event do
   use EventManager.Schema
   import Ecto.Changeset
 
+  alias EventManager.Events.Schemas.Series
   alias EventManager.Venues.Schemas.Venue
 
   schema "events" do
@@ -9,8 +10,10 @@ defmodule EventManager.Events.Schemas.Event do
     field(:starts_at, :utc_datetime)
     field(:duration, :integer)
     field(:image_url, :string)
-    belongs_to(:venue, Venue)
     field(:online_link, :string)
+
+    belongs_to(:venue, Venue)
+    belongs_to(:series, Series)
 
     timestamps()
   end
