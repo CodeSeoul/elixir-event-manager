@@ -59,7 +59,9 @@ defmodule EventManager.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       # UUIDv7 generator
-      {:uuidv7, "~> 0.2"}
+      {:uuidv7, "~> 0.2"},
+      # Req library for making HTTP requests
+      {:req, "~> 0.4.0"}
     ]
   end
 
