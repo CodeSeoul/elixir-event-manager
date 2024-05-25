@@ -24,6 +24,7 @@ defmodule EventManager.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import EventManager.DataCase
+      import EventManager.Factory
     end
   end
 

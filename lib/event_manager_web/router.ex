@@ -20,6 +20,17 @@ defmodule EventManagerWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/api", EventManagerWeb do
+    pipe_through :api
+
+    resources "/venues", VenueController
+    resources "/events", EventController
+    resources "/map_links", MapLinkController
+    resources "/members", MemberController
+    resources "/rsvps", RsvpController
+    resources "/series", SeriesController
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", EventManagerWeb do
   #   pipe_through :api

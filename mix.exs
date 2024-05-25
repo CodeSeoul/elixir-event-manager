@@ -61,7 +61,8 @@ defmodule EventManager.MixProject do
       # UUIDv7 generator
       {:uuidv7, "~> 0.2"},
       # Req library for making HTTP requests
-      {:req, "~> 0.4.0"}
+      {:req, "~> 0.4.0"},
+      {:ex_machina, "~> 2.7.0", only: :test}
     ]
   end
 
@@ -77,6 +78,7 @@ defmodule EventManager.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "test.prepare": ["ecto.drop", "ecto.create", "ecto.migrate"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind event_manager", "esbuild event_manager"],
       "assets.deploy": [

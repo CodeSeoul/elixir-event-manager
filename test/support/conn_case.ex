@@ -28,6 +28,7 @@ defmodule EventManagerWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import EventManagerWeb.ConnCase
+      import EventManager.Factory
     end
   end
 

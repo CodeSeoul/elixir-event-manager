@@ -23,7 +23,15 @@ defmodule EventManager.Events.Schemas.Event do
 
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:description, :starts_at, :duration, :image_url, :venue_id, :online_link])
-    |> validate_required([:description, :starts_at, :duration, :venue_id])
+    |> cast(attrs, [
+      :description,
+      :starts_at,
+      :duration,
+      :image_url,
+      :venue_id,
+      :series_id,
+      :online_link
+    ])
+    |> validate_required([:description, :starts_at, :duration, :venue_id, :series_id])
   end
 end
