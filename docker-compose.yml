@@ -18,6 +18,21 @@ services:
       - ADMINER_DESIGN=dracula
     networks:
       - eem
+  # This is an example to run the API container. To build it, run the following command in the project roon:
+  # docker build -t codeseoul/elixir-event-manager-api:0.0.1 .
+
+  # api:
+  #   image: codeseoul/elixir-event-manager-api:0.0.1
+  #   ports:
+  #     - 4000:4000
+  #   environment:
+  #     - DATABASE_HOST=postgres
+  #     - DATABASE_NAME=event_manager_dev
+  #     - DATABASE_USERNAME=postgres
+  #     - DATABASE_PASSWORD=postgres
+  #     - SECRET_KEY_BASE=secret
+  #   networks:
+  #     - eem
 
 networks:
   eem:

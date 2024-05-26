@@ -21,19 +21,41 @@ if System.get_env("PHX_SERVER") do
 end
 
 if config_env() == :prod do
-  database_url =
-    System.get_env("DATABASE_URL") ||
+  database_host =
+    System.get_env("DATABASE_HOST") ||
       raise """
-      environment variable DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
+      environment variable DATABASE_HOST is missing.
+      """
+
+  database_username =
+    System.get_env("DATABASE_USERNAME") ||
+      raise """
+      environment variable DATABASE_USERNAME is missing.
+      """
+
+  database_password =
+    System.get_env("DATABASE_PASSWORD") ||
+      raise """
+      environment variable DATABASE_PASSWORD is missing.
+      """
+
+  database_name =
+    System.get_env("DATABASE_NAME") ||
+      raise """
+      environment variable DATABASE_NAME is missing.
       """
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   config :event_manager, EventManager.Repo,
     # ssl: true,
-    url: database_url,
+    username: database_username,
+    password: database_password,
+    hostname: database_host,
+    database: database_name,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+    migration_timestamps: [type: :timestamptz],
+    migration_primary_key: [type: :uuid],
     socket_options: maybe_ipv6
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
