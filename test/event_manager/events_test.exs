@@ -179,5 +179,15 @@ defmodule EventManager.EventsTest do
       series = insert(:series)
       assert %Ecto.Changeset{} = Events.change_series(series)
     end
+
+    test "list_series_events/1 returns all events for a series" do
+      series = insert(:series)
+
+      events =
+        insert_list(3, :event, series: series)
+        |> Enum.map(&Ecto.reset_fields(&1, [:venue, :series]))
+
+      assert Events.list_series_events(series.id) == events
+    end
   end
 end

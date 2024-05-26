@@ -68,6 +68,16 @@ defmodule EventManager.VenuesTest do
       assert Venues.list_venues() == [venue]
     end
 
+    test "list_venues_with_map_links/0 returns all venues with map_links" do
+      venue = insert(:venue)
+
+      map_link =
+        insert(:map_link, venue: venue)
+        |> Ecto.reset_fields([:venue])
+
+      assert [%Venue{map_link: ^map_link}] = Venues.list_venues_with_map_links()
+    end
+
     test "get_venue!/1 returns the venue with given id" do
       venue = insert(:venue)
       assert Venues.get_venue!(venue.id) == venue

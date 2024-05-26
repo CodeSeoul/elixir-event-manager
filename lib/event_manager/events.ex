@@ -3,6 +3,8 @@ defmodule EventManager.Events do
 
   alias EventManager.Repo
 
+  import Ecto.Query
+
   @doc """
   Returns the list of events.
 
@@ -287,5 +289,14 @@ defmodule EventManager.Events do
   """
   def change_series(%Series{} = series, attrs \\ %{}) do
     Series.changeset(series, attrs)
+  end
+
+  def list_series_events(series_id) do
+    query =
+      from(e in Event,
+        where: e.series_id == ^series_id
+      )
+
+    Repo.all(query)
   end
 end

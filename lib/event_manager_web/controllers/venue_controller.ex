@@ -6,6 +6,11 @@ defmodule EventManagerWeb.VenueController do
 
   action_fallback EventManagerWeb.FallbackController
 
+  def index(conn, %{"maps" => _}) do
+    venues = Venues.list_venues_with_map_links()
+    render(conn, :index, venues: venues)
+  end
+
   def index(conn, _params) do
     venues = Venues.list_venues()
     render(conn, :index, venues: venues)

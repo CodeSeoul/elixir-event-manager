@@ -1,4 +1,5 @@
 defmodule EventManagerWeb.SeriesJSON do
+  alias EventManager.Events.Schemas.Event
   alias EventManager.Events.Schemas.Series
 
   @doc """
@@ -15,9 +16,21 @@ defmodule EventManagerWeb.SeriesJSON do
     %{data: data(series)}
   end
 
+  def list_events(%{events: events}) do
+    %{data: for(event <- events, do: data(event))}
+  end
+
   defp data(%Series{} = series) do
     %{
       id: series.id
+    }
+  end
+
+  defp data(%Event{} = event) do
+    %{
+      description: event.description,
+      event_id: event.id,
+      series_id: event.series_id
     }
   end
 end

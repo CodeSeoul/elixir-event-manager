@@ -65,6 +65,27 @@ defmodule EventManagerWeb.SeriesControllerTest do
     end
   end
 
+  describe "get series events" do
+    setup do
+      series = insert(:series)
+      insert_list(3, :event, series: series)
+      [series: series]
+    end
+
+    test "lists all events for a series", %{conn: conn, series: %{id: series_id}} do
+      conn = get(conn, ~s"/api/series/#{series_id}/events")
+      [head | _] = response = json_response(conn, 200)["data"]
+
+      assert length(response) == 3
+
+      assert %{
+               "description" => _,
+               "event_id" => _,
+               "series_id" => ^series_id
+             } = head
+    end
+  end
+
   defp create_series(_) do
     series = insert(:series)
     %{series: series}

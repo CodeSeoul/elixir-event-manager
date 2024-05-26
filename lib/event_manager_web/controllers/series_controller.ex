@@ -40,4 +40,9 @@ defmodule EventManagerWeb.SeriesController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def list_events(conn, %{"id" => id}) do
+    events = Events.list_series_events(id)
+    render(conn, :list_events, events: events)
+  end
 end

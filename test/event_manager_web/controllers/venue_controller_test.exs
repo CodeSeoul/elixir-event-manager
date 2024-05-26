@@ -12,6 +12,26 @@ defmodule EventManagerWeb.VenueControllerTest do
       conn = get(conn, ~p"/api/venues")
       assert json_response(conn, 200)["data"] == []
     end
+
+    test "lists all venues with map links", %{conn: conn} do
+      venue = insert(:venue)
+      map_link = insert(:map_link, venue: venue)
+      conn = get(conn, ~p"/api/venues?maps=true")
+
+      assert [
+               %{
+                 "id" => venue.id,
+                 "name" => venue.name,
+                 "address" => venue.address,
+                 "map_links" => %{
+                   "naver" => map_link.naver_map_link,
+                   "t_map" => map_link.t_map_link,
+                   "google" => map_link.google_map_link,
+                   "kakao" => map_link.kakao_map_link
+                 }
+               }
+             ] == json_response(conn, 200)["data"]
+    end
   end
 
   describe "create venue" do

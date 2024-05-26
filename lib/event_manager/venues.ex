@@ -117,6 +117,13 @@ defmodule EventManager.Venues do
     Repo.all(Venue)
   end
 
+  def list_venues_with_map_links do
+    from(v in Venue,
+      preload: [:map_link]
+    )
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single venue.
 

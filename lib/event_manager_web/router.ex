@@ -23,12 +23,13 @@ defmodule EventManagerWeb.Router do
   scope "/api", EventManagerWeb do
     pipe_through :api
 
-    resources "/venues", VenueController
-    resources "/events", EventController
-    resources "/map_links", MapLinkController
-    resources "/members", MemberController
-    resources "/rsvps", RsvpController
-    resources "/series", SeriesController
+    resources "/venues", VenueController, except: [:new, :edit]
+    resources "/events", EventController, except: [:new, :edit]
+    resources "/map_links", MapLinkController, except: [:new, :edit]
+    resources "/members", MemberController, except: [:new, :edit]
+    resources "/rsvps", RsvpController, except: [:new, :edit]
+    resources "/series", SeriesController, except: [:new, :edit]
+    get "/series/:id/events", SeriesController, :list_events
   end
 
   # Other scopes may use custom stacks.
